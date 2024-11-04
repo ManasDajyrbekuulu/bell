@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Расписание звонков</h2>
+<form method="POST" action="{{ url_for('add_bell') }}" enctype="multipart/form-data">
+    <label>Время начала:</label>
+    <input type="time" name="start_time" required>
+    <label>Время окончания:</label>
+    <input type="time" name="end_time" required>
+    <label>Музыкальный файл:</label>
+    <input type="file" name="music_file" accept="audio/*">
+    <button type="submit">Добавить звонок</button>
+</form>
+
+<ul>
+    {% for schedule in schedules %}
+        <li>{{ schedule.start_time }} - {{ schedule.end_time }}
+            <form method="POST" action="{{ url_for('delete_bell', id=schedule.id) }}">
+                <button type="submit">Удалить</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
